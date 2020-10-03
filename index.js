@@ -15,8 +15,8 @@ const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const queue = new Map();
 
-const muteFile = 'D:/Projects/DiscordBot/discord-bot-sitepoint/мут.mp3';
-const unmuteFile = 'D:/Projects/DiscordBot/discord-bot-sitepoint/размут.mp3'
+const muteFile = 'мут.mp3';
+const unmuteFile = 'размут.mp3'
 
 
 const botCommands = require('./commands');
@@ -32,11 +32,11 @@ bot.login(token);
 
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
-  users.set('611520086733357072', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/жекасалам.mp3', muted: 0, user: 'Женя'});
-  users.set('323200937067806722', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/рафасалам.mp3', muted: 0, user: 'Рафа'});
-  users.set('648526261794242601', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/кирпичсалам.ogg', muted: 0, user: 'Кирыч'});
-  users.set('367237696281903114', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/колясалам.ogg', muted: 0, user: 'Коля'});
-  users.set('692231171781951488', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/димасалам.ogg', muted: 0, user: 'Дима'});
+  users.set('611520086733357072', {file: './sounds/жекасалам.mp3', muted: 0, user: 'Женя'});
+  users.set('323200937067806722', {file: './sounds/рафасалам.mp3', muted: 0, user: 'Рафа'});
+  users.set('648526261794242601', {file: './sounds/кирпичсалам.ogg', muted: 0, user: 'Кирыч'});
+  users.set('367237696281903114', {file: './sounds/колясалам.ogg', muted: 0, user: 'Коля'});
+  users.set('692231171781951488', {file: './sounds/димасалам.ogg', muted: 0, user: 'Дима'});
 });
 
 bot.on('message', async msg => {
@@ -243,7 +243,7 @@ bot.on('voiceStateUpdate', async (oldMember, newMember) => {
       } else if (oldMemberChannel != null) {
         let oldCon = await oldMember.channel.join();
         console.log(` ${oldMember.id} left the channel`);
-        oldCon.play('D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/съебал.mp3');
+        oldCon.play('./sounds/съебал.mp3');
       }
   }
 });
