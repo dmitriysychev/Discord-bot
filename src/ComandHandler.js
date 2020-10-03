@@ -6,7 +6,7 @@ class ComandHandler {
     }
 
     get nameBot() {
-        return `I'm fucking ${this.name}`;
+        return ` ${this.name}`;
     }
 }
 
