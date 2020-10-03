@@ -32,11 +32,11 @@ bot.login(token);
 
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
-  users.set('611520086733357072', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/жекасалам.mp3', muted: 0, user: 'Женя'});
-  users.set('323200937067806722', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/рафасалам.mp3', muted: 0, user: 'Рафа'});
-  users.set('648526261794242601', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/кирпичсалам.ogg', muted: 0, user: 'Кирыч'});
-  users.set('367237696281903114', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/колясалам.ogg', muted: 0, user: 'Коля'});
-  users.set('692231171781951488', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/димасалам.ogg', muted: 0, user: 'Дима'});
+  users.set('611520086733357072', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/жекасалам.mp3', muted: 0, user: 'Женя'});
+  users.set('323200937067806722', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/рафасалам.mp3', muted: 0, user: 'Рафа'});
+  users.set('648526261794242601', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/кирпичсалам.ogg', muted: 0, user: 'Кирыч'});
+  users.set('367237696281903114', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/колясалам.ogg', muted: 0, user: 'Коля'});
+  users.set('692231171781951488', {file: 'D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/димасалам.ogg', muted: 0, user: 'Дима'});
 });
 
 bot.on('message', async msg => {
@@ -231,6 +231,7 @@ bot.on('voiceStateUpdate', async (oldMember, newMember) => {
               });
             return;
           } else {
+            console.log("technically should play music");
             let musicFile = users.get(newMember.id).file;
             const dsp = con
               .play(musicFile, { volume: 0.8 })
@@ -242,7 +243,7 @@ bot.on('voiceStateUpdate', async (oldMember, newMember) => {
       } else if (oldMemberChannel != null) {
         let oldCon = await oldMember.channel.join();
         console.log(` ${oldMember.id} left the channel`);
-        oldCon.play('D:/Projects/DiscordBot/discord-bot-sitepoint/съебал.mp3');
+        oldCon.play('D:/Projects/DiscordBot/discord-bot-sitepoint/sounds/съебал.mp3');
       }
   }
 });
