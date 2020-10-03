@@ -12,5 +12,3 @@ Help can be issued using command `<.как>`
 
 LANGUAGE: Russian
 
-HELP COMMAND: .как
-
