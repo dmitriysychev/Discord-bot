@@ -8,6 +8,8 @@ This is a bot for discord that can talk to you.
 
 This bot can also play music.
 
+Help can be issued using command `<.как>`
+
 LANGUAGE: Russian
 
 HELP COMMAND: .как
