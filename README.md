@@ -12,3 +12,4 @@ Help can be issued using command `<.как>`
 
 LANGUAGE: Russian
 
+Package base: Michiel Mulders
