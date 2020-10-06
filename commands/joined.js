@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+require('')
 
 module.exports = {
     name: '.зайди',
@@ -9,7 +10,7 @@ module.exports = {
             musicQueue.clear();
 
             const connection = await message.member.voice.channel.join();
-            musicDispatcher = connection.play('D:/Projects/DiscordBot/discord-bot-sitepoint/commands/joined.mp3', {volume : 0.5});
+            musicDispatcher = connection.play('../sounds/joined.mp3', {volume : 0.5});
             musicDispatcher.on('finish', async () => {
                 if (!musicQueue.isEmpty()) {
                     let toPlay = musicQueue.poll();
