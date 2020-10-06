@@ -4,9 +4,10 @@ module.exports = {
     name: '.зайди',
     async execute(message, args) { 
         if (message.member.voice.channel) {
-                //music stuff
+            //music stuff
             message.channel.send("Зашел хуле блять");
             musicQueue.clear();
+
             const connection = await message.member.voice.channel.join();
             musicDispatcher = connection.play('D:/Projects/DiscordBot/discord-bot-sitepoint/commands/joined.mp3', {volume : 0.5});
             musicDispatcher.on('finish', async () => {
