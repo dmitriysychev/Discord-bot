@@ -1,8 +1,8 @@
 {
-  "name": "discord-bot",
+  "name": "PopChillBot",
   "version": "1.0.0",
   "description": "Russian Discord Bot",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
