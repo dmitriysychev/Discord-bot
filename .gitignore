@@ -5,6 +5,7 @@
 
 # Dependency directories
 node_modules/
+config/client.json
 
 
 # Optional npm cache directory
