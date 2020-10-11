@@ -4,7 +4,7 @@ const MusicQueue = require('./src/MusicQueue');
 const ytdl = require('ytdl-core');
 let users = new Map();
 
-
+const customLangPack = require('./lang/' + (process.env.LANG || 'default') + '.json');
 //addition for music bot
 global.musicQueue = new MusicQueue();
 global.musicDispatcher = null;
@@ -14,8 +14,8 @@ const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const queue = new Map();
 
-const muteFile = 'мут.mp3';
-const unmuteFile = 'размут.mp3'
+const muteFile = './sounds/мут.mp3';
+const unmuteFile ='./sounds/размут.mp3';
 
 
 const botCommands = require('./commands');
@@ -53,8 +53,7 @@ bot.on('message', async msg => {
 
     const command = '.' + args.shift().toLowerCase();
 
-
-
+    //music
     if (command === '.ебошь') {
         exec(msg, serverQueue);
         return;

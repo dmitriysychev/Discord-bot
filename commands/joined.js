@@ -1,5 +1,5 @@
 const ytdl = require('ytdl-core');
-require('')
+
 
 module.exports = {
     name: '.зайди',
