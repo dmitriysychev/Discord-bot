@@ -1,6 +1,5 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const Canvas = require('canvas');
 const MusicQueue = require('./src/MusicQueue');
 const ytdl = require('ytdl-core');
 let users = new Map();
@@ -9,7 +8,7 @@ let users = new Map();
 //addition for music bot
 global.musicQueue = new MusicQueue();
 global.musicDispatcher = null;
-const { prefix, token } = require('./config.json');
+const { prefix, token } = require('./config/client.json');
 
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
@@ -80,14 +79,11 @@ bot.on('message', async msg => {
 
 });
 
-
 async function exec(message, serverQueue) {
     const args = message.content.split(" ");
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel)
-        return message.channel.send(
-        "Ты должен быть в голосовом чтобы использовать эту команду, уеба!"
-        );
+        return message.channel.send("Ты должен быть в голосовом чтобы использовать эту команду, уеба!");
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
         return message.channel.send(
@@ -132,6 +128,7 @@ async function exec(message, serverQueue) {
         return message.channel.send(`${song.title} была добавлена в очередь`);
     }
 }
+
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
     if (!song) {
@@ -175,15 +172,6 @@ function skip(message, serverQueue) {
 }
 
 //end of execute
-
-
-
-
-
-
-
-
-
 
 bot.on('guildMemberAdd', member => {
   // Send the message to a designated channel on a server:
@@ -251,7 +239,3 @@ bot.on('voiceStateUpdate', async (oldMember, newMember) => {
       }
   }
 });
-
-
-
-
