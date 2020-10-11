@@ -35,7 +35,9 @@ class Bot {
             process.exit(1);
         }
     }
-
+    /**
+     * 
+     */
     async onReadyListener() {
         console.info(`Logged in as ${this._bot.user.tag}!`);
 
@@ -43,6 +45,10 @@ class Bot {
         this._bot.on('voiceStateUpdate', (olduser, newuser) => { this.onVoiceStateUpdate(olduser, newuser)});
     }
 
+    /**
+     * 
+     * @param {*} message 
+     */
     onMessageListener(message) {
         if (!message.content.startsWith(this._prefix) || message.author.bot) return;
         // if someone tagged bot
@@ -102,7 +108,11 @@ class Bot {
             }
         }
     }
-
+    /**
+     * 
+     * @param {*} user 
+     * @param {*} file 
+     */
     async playFile(user, file) {
         try {
             let connection = await user.channel.join();
@@ -112,7 +122,11 @@ class Bot {
             throw new Error(error);
         }
     }
-
+    /**
+     * 
+     * @param {*} userLeft 
+     * @param {*} userJoined 
+     */
     getVoiceChannelUpdateType(userLeft, userJoined) {
         if (userJoined.channel != null) {
             if (userJoined.selfMute) {
