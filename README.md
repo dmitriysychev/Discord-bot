@@ -1,7 +1,7 @@
 # discord-bot
 # Warning, explicit content present!
 
-Make sure to change your token in config.js, just use the command 
+Make sure to change your token in config/client.js, just use the command 
               node app.js to run it.
 
 This is a bot for discord that can talk to you.
