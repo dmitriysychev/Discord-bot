@@ -5,6 +5,7 @@ class MusicQueue {
     constructor(queue = []) {
         this._queue = queue;
         this.isPlaying = false;
+        this.isInterrupted = false;
     }
 
     get length() {

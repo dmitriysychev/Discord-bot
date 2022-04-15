@@ -98,12 +98,12 @@ async function exec(message, serverQueue) {
 
     if (!serverQueue) {
         const queueContruct = {
-        textChannel: message.channel,
-        voiceChannel: voiceChannel,
-        connection: null,
-        songs: [],
-        volume: 5,
-        playing: true,
+          textChannel: message.channel,
+          voiceChannel: voiceChannel,
+          connection: null,
+          songs: [],
+          volume: 5,
+          playing: true,
         };
         // Setting the queue using our contract
         queue.set(message.guild.id, queueContruct);
@@ -126,48 +126,6 @@ async function exec(message, serverQueue) {
         console.log(serverQueue.songs);
         return message.channel.send(`${song.title} была добавлена в очередь`);
     }
-}
-
-function play(guild, song) {
-    const serverQueue = queue.get(guild.id);
-    if (!song) {
-        serverQueue.voiceChannel.leave();
-        queue.delete(guild.id);
-        return;
-    }
-
-    const dispatcher = serverQueue.connection
-        .play(ytdl(song.url))
-        .on("finish", () => {
-            serverQueue.songs.shift();
-            play(guild, serverQueue.songs[0]);
-        })
-        .on("error", error => console.error(error));
-
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    serverQueue.textChannel.send(`Ща ебошит: **${song.title}**`);
-}
-
-function stop(message, serverQueue) {
-  if (!message.member.voice.channel) {
-    return message.channel.send(
-      "Ты должен быть в голосом чтобы остановить музыку алло!"
-    );
-  }
-
-  serverQueue.songs = [];
-  serverQueue.connection.dispatcher.end();
-}
-
-
-function skip(message, serverQueue) {
-    if (!message.member.voice.channel)
-        return message.channel.send(
-        "Ты должен быть в голосом чтобы остановить музыку алло!"
-        );
-    if (!serverQueue)
-        return message.channel.send("В очереди нету песен уеба!");
-    serverQueue.connection.dispatcher.end();
 }
 
 //end of execute
