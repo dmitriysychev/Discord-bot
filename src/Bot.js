@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const Action = require('./Action');
+const MusicQueue = require('./MusicQueue');
 
 class Bot {
     /**
@@ -16,7 +17,7 @@ class Bot {
         this._VIPUsers = new Map();
         this._langPack = langPack;
 
-        this._queuesOfChannelsMusic = new Map();
+        this._queuesOfChannelsMusic = new MusicQueue();
 
         process.on('exit', this.stop)
     }
@@ -65,7 +66,7 @@ class Bot {
         } else {
             try {
                 let action = this._bot.commands.get(command);
-                action.execute(message, args);
+                action.execute(this, message, args);
             } catch (error) {
                 console.error(error);
                 message.reply(this._langPack.error);

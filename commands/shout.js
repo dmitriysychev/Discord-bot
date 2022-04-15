@@ -1,7 +1,7 @@
 module.exports = {
     name: '.ору',
     description: 'Оралка!',
-    execute(msg, args) {
+    execute(bot, msg, args) {
       //msg.reply('pong');
         let m = `${msg.content}`;
         if (m.length > 4) {

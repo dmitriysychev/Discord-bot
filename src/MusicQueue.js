@@ -4,6 +4,7 @@ class MusicQueue {
      */
     constructor(queue = []) {
         this._queue = queue;
+        this.isPlaying = false;
     }
 
     get length() {
@@ -18,7 +19,11 @@ class MusicQueue {
         return this._queue.splice(this._queue.length - 1, 1)[0];
     }
 
-    isEmpty() {
+    top() {
+        return this._queue[0];
+    }
+
+    get isEmpty() {
         return this._queue.length === 0
     }
 

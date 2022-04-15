@@ -4,7 +4,7 @@ const MusicQueue = require('./src/MusicQueue');
 const ytdl = require('ytdl-core');
 let users = new Map();
 
-const customLangPack = require('./lang/' + (process.env.LANG || 'default') + '.json');
+const customLangPack = require('./lang/' + ( 'default') + '.json');
 //addition for music bot
 global.musicQueue = new MusicQueue();
 global.musicDispatcher = null;

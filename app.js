@@ -2,9 +2,10 @@ const Bot = require('./src/Bot');
 const Action = require('./src/Action');
 
 const config = require('./config/client.json');
-const customLangPack = require('./lang/' + (process.env.LANG_PACK || 'default') + '.json');
+const customLangPack = require('./lang/' + ( 'default') + '.json');
 const actions = require('./commands/index');
 const vipUsers = require('./config/vipUsers.json');
+
 const bot = new Bot(config.token, config.prefix, customLangPack);
 
 for (let action in actions) {
@@ -24,7 +25,7 @@ for (let vipUser in vipUsers) {
 
 (async () => {
     try {
-        bot.launch();
+        await bot.launch();
     } catch (error) {
         console.log(error);
     }

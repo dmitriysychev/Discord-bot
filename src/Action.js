@@ -9,9 +9,9 @@ class Action {
         this._execute = execute;
     }
 
-    async execute(message) {
+    async execute(bot, message, args) {
         try {
-            await this._execute(message);
+            await this._execute(bot, message, args);
         } catch (error) {
             console.log(error);
             throw new Error(error);

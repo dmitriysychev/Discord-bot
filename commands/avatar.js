@@ -1,7 +1,7 @@
 module.exports = {
     name : '.аватар',
     aliases: ['.иконка', '.фотка'],
-    execute(message, args) {
+    execute(bot, message, args) {
         if (!message.mentions.users.size) {
             return message.channel.send(`Твоя фотка: <${message.author.displayAvatarURL}>`);
         } 
