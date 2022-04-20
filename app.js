@@ -6,7 +6,7 @@ const customLangPack = require('./lang/' + ( 'default') + '.json');
 const actions = require('./commands/index');
 const vipUsers = require('./config/vipUsers.json');
 
-const bot = new Bot(config.token, config.prefix, customLangPack);
+const bot = new Bot(process.env.token, config.prefix, customLangPack);
 
 for (let action in actions) {
     let newAction = new Action(
