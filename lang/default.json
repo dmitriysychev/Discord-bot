@@ -1,6 +1,6 @@
 {
     "invalidCommand": "НЕ ЗНАЮ ЧЕГО ТЫ ХОЧЕШЬ, БРАТАНЧИК :rage: ",
     "whatDoYouWant" : "Чего хочешь?",
-    "error": "ПРОИЗОШЛА ОШИБКА, СМОТРИ КОНСОЛЬ :japanese_goblin: "
-
+    "error": "ПРОИЗОШЛА ОШИБКА, СМОТРИ КОНСОЛЬ :japanese_goblin: ",
+    "userNotInChannel": "Ты должен быть в войсе чтобы я туда зашел"
 }

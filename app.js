@@ -1,5 +1,7 @@
+require('dotenv').config();
 const Bot = require('./src/Bot');
 const Action = require('./src/Action');
+const server = require('./server');
 
 const config = require('./config/client.json');
 const customLangPack = require('./lang/' + ( 'default') + '.json');
@@ -23,10 +25,10 @@ for (let vipUser in vipUsers) {
     bot.setVipUser(vipUser, vipUsers[vipUser])
 }
 
-(async () => {
+server.listen(process.env.PORT, async () => {
     try {
         await bot.launch();
     } catch (error) {
-        console.log(error);
+        console.log('FATAL_BOT_ERROR', error);
     }
-})();
+});

@@ -1,6 +1,8 @@
-const Discord = require('discord.js');
+const { Client, Collection, Intents } = require('discord.js');
 const Action = require('./Action');
 const MusicQueue = require('./MusicQueue');
+const { connectToAuthorChannel } = require('./utils');
+const { createAudioResource } = require('@discordjs/voice');
 
 class Bot {
     /**
@@ -9,11 +11,16 @@ class Bot {
      * @param {String} prefix - prefix of bots commands
      */
     constructor (token, prefix, langPack) {
-
         this._token = token;
         this._prefix = prefix;
-        this._bot = new Discord.Client();
-        this._bot.commands = new Discord.Collection();
+        this._bot = new Client({
+            intents: [
+                Intents.FLAGS.GUILDS,
+                Intents.FLAGS.GUILD_MESSAGES,
+                Intents.FLAGS.GUILD_VOICE_STATES,
+            ]
+        });
+        this._bot.commands = new Collection();
         this._VIPUsers = new Map();
         this._langPack = langPack;
 
@@ -42,7 +49,7 @@ class Bot {
     async onReadyListener() {
         console.info(`Logged in as ${this._bot.user.tag}!`);
 
-        this._bot.on('message', (message) => { this.onMessageListener(message)});
+        this._bot.on('messageCreate', (message) => { this.onMessageListener(message)});
         this._bot.on('voiceStateUpdate', (olduser, newuser) => { this.onVoiceStateUpdate(olduser, newuser)});
     }
 
@@ -116,8 +123,8 @@ class Bot {
      */
     async playFile(user, file) {
         try {
-            let connection = await user.channel.join();
-            return connection.play('./sounds/' + file).on("finish", () => user.channel.leave());
+            const { player } = connectToAuthorChannel({ guildId: user.guild.id, member: {voice: {channelId: user.channelId}}, guild: {voiceAdapterCreator: user.guild.voiceAdapterCreator}});
+            player.play(createAudioResource('./sounds/' + file));
         } catch (error) {
             console.error('Error in playFile method:\n', error);
             throw new Error(error);

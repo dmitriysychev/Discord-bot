@@ -1,7 +1,8 @@
 const ytdl = require('ytdl-core');
+const { connectToAuthorChannel } = require('../src/utils');
+const { createAudioResource } = require('@discordjs/voice');
 
 async function execute(bot, message, [url, ...rest]) {
-    console.log(message.client.emojis);
     if (!url.includes('youtube')) {
         message.channel.send('С ютубы мне давай');
         message.channel.send('<:6101_JohnnySins:713412350564106240>');
@@ -28,18 +29,13 @@ async function playUrl(message, queue) {
     }
     queue.isPlaying = true;
     
-    const [{videoDetails: {title}}, connection] = await Promise.all([
+    const [{videoDetails: {title}}, subscription] = await Promise.all([
         await ytdl.getInfo(url),
-        message.member.voice.channel.join(),
+        connectToAuthorChannel(message),
     ]);
+    console.log(subscription);
     message.channel.send(`Ща ебошит: **${title}**`);
-    await connection.play(ytdl(url, { volume: 5 }))
-        .on("finish", async () => {
-            console.log('finished ' + url);
-            
-            await playUrl(message, queue);
-        })
-        .on("error", error => console.error(error));
+    await subscription.player.play(createAudioResource(ytdl(url, { volume: 5, filter: 'audioonly' })));
 }
 
 module.exports = {
