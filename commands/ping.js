@@ -1,8 +1,14 @@
-module.exports = {
-    name: '.пинг',
-    description: 'Ping!',
-    execute(bot, msg, args) {
-        //msg.reply('pong');
-        msg.channel.send('понг епта');
-    },
-};
+const BaseCommand = require('./base_command');
+
+class PingCommand extends BaseCommand {
+  constructor() {
+    super();
+    this.description = 'Ping!';
+  }
+
+  execute(message) {
+    message.channel.send('понг епта');
+  }
+}
+
+module.exports = new PingCommand();

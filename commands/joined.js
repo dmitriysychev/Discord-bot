@@ -1,25 +1,27 @@
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, VoiceConnectionStatus, entersState  } = require('@discordjs/voice');
-const MusicQueue = require('../src/MusicQueue');
-const { playUrl } = require('./play');
+const { createAudioResource } = require('@discordjs/voice');
+
 const { connectToAuthorChannel } = require('../src/utils');
 
+const BaseCommand = require('./base_command');
 
-module.exports = {
-    name: '.зайди',
-    async execute(bot, message, args) { 
-        if (message.member.voice.channel) {
-            //music stuff
-            message.channel.send("Зашел хуле блять");
-            bot._queuesOfChannelsMusic.clear();
+class JoinCommand extends BaseCommand {
+  constructor() {
+    super();
+    this.description = 'Command to join the voice channgel';
+    this.name = 'зайди';
+  }
 
-            if (bot._queuesOfChannelsMusic.isPlaying) {
-                bot._queuesOfChannelsMusic.isInterrupted = true;
-            }
+  async execute(message) {
+    if (message.member.voice.channel) {
+      // music stuff
+      message.channel.send('Зашел хуле блять');
 
-            const { player } = connectToAuthorChannel(message);
-            player.play(createAudioResource('./sounds/joined.mp3'));
-        } else {
-            message.reply('You need to join a voice channel first!');
-        }
-    },
-};
+      const { player } = connectToAuthorChannel(message);
+      player.play(createAudioResource('./sounds/joined.mp3'));
+    } else {
+      message.reply('You need to join a voice channel first!');
+    }
+  }
+}
+
+module.exports = new JoinCommand();

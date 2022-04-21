@@ -1,12 +1,10 @@
-const { json } = require("express");
-
 class ConnectionsStorage {
   constructor() {
     this._store = new Map();
   }
 
   /**
-   * 
+   *
    */
   toString() {
     this._store.forEach((key, value) => {

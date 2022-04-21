@@ -24,12 +24,10 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-const create = ({file}) => {
-  return winston.createLogger({
-    defaultMeta: { file },
-  });
-}
+const create = ({ file }) => winston.createLogger({
+  defaultMeta: { file },
+});
 
 module.exports = {
   create,
-}
+};
