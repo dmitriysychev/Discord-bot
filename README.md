@@ -1,4 +1,5 @@
 # discord-bot
+ - `npm start`
 # Warning, explicit content present!
 
 Make sure to change your token in config/client.js, just use the command 
