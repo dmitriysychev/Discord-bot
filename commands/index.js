@@ -7,7 +7,7 @@ const Leave = require('./leave');
 const commandMap = {
   пинг: Ping,
   зайди: Join,
-  играй: Play,
+  ебашь: Play,
   уйди: Leave,
   покажи: Show,
 };

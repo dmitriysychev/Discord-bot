@@ -1,7 +1,6 @@
 const winston = require('winston');
 const als = require('async-local-storage');
 const { format } = require('date-fns');
-const config = require('config').get('logger');
 
 const { getRandomString } = require('./cryptography');
 
@@ -84,7 +83,7 @@ function setLogLevel(level) {
 }
 
 // eslint-disable-next-line no-mixed-operators
-const logFormat = config.get('json') === true && jsonView || consoleView;
+const logFormat = process.env.JSON_LOG && jsonView || consoleView;
 
 class Logger {
   constructor(meta = { className: 'static' }) {
@@ -112,6 +111,10 @@ class Logger {
   setMeta(data) {
     const meta = als.get(ALS_KEY) || {};
     als.set(ALS_KEY, { ...data, requestId: meta.requestId }, false);
+  }
+
+  setScope() {
+    als.scope();
   }
 
   addMeta(data) {

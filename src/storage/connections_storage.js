@@ -1,6 +1,12 @@
+const log = require('../common/logger').child({ className: 'ConnectionsStorage' });
+
 class ConnectionsStorage {
   constructor() {
     this._store = new Map();
+  }
+
+  async init() {
+    log.info({ methodName: 'init' }, 'Connections storage initialized');
   }
 
   /**
@@ -39,4 +45,4 @@ class ConnectionsStorage {
   }
 }
 
-module.exports = new ConnectionsStorage();
+module.exports = ConnectionsStorage;

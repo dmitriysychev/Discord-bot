@@ -3,6 +3,7 @@ const { createAudioResource } = require('@discordjs/voice');
 const Action = require('./Action');
 const MusicQueue = require('./MusicQueue');
 const { connectToAuthorChannel } = require('./utils');
+const log = require('./common/logger').child({ className: 'Bot' });
 
 class Bot {
   /**
@@ -48,10 +49,11 @@ class Bot {
      *
      */
   async onReadyListener() {
-    console.info(`Logged in as ${this._bot.user.tag}!`);
+    log.info({ methodName: 'onReadyListener' }, `Logged in as ${this._bot.user.tag}!`);
 
     this._bot.on('messageCreate', (message) => { this.onMessageListener(message); });
     this._bot.on('voiceStateUpdate', (olduser, newuser) => { this.onVoiceStateUpdate(olduser, newuser); });
+    this._bot.on('error', (err) => log.error({ methodName: 'botErrorCatcher', err }, 'BOT_UNCAUGHT_EXCEPTION'));
   }
 
   /**
@@ -59,6 +61,7 @@ class Bot {
      * @param {*} message
      */
   onMessageListener(message) {
+    log.setScope();
     if (!message.content.startsWith(this._prefix) || message.author.bot) return;
     // if someone tagged bot
     const args = message.content.slice(this._prefix.length).trim().split(/ +/);
@@ -68,7 +71,7 @@ class Bot {
 
     // parse out the command
     const command = args.shift().toLowerCase();
-    console.log(command);
+    log.info({ methodName: 'onMessageListener' }, `Command issued:  ${command}`);
     if (!this._bot.commands.has(command)) {
       console.log(this._bot.commands);
       message.reply(this._langPack.invalidCommand);
