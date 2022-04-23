@@ -1,10 +1,15 @@
 const {
-  joinVoiceChannel, createAudioPlayer, VoiceConnectionStatus,
+  joinVoiceChannel,
+  createAudioPlayer,
+  VoiceConnectionStatus,
+  AudioPlayerStatus,
+  createAudioResource,
 } = require('@discordjs/voice');
-const connectionStorage = require('../storage/connections_storage');
+const ytdl = require('ytdl-core');
+const storage = require('../storage');
 
 function connectToAuthorChannel(message) {
-  const existingConnection = connectionStorage.getConnection(message.guildId);
+  const existingConnection = storage.connections.getConnection(message.guildId);
   if (existingConnection) {
     return existingConnection;
   }
@@ -24,15 +29,27 @@ function connectToAuthorChannel(message) {
 
   connection.on(VoiceConnectionStatus.Disconnected, () => {
     console.log('disconnected from voice channel');
-    connectionStorage.removeConnection(message.guildId);
     connection.destroy();
   });
+  connection.on(VoiceConnectionStatus.Destroyed, () => {
+    storage.connections.removeConnection(message.guildId);
+  });
 
-  connectionStorage.addConnection(message.guildId, subscription);
+  player.on(AudioPlayerStatus.Idle, async () => {
+    const url = await storage.musicQueue.poll(message.guildId);
+    if (!url) {
+      connection.destroy();
+    }
+    const { videoDetails: { title } } = await ytdl.getInfo(url);
+    player.play(createAudioResource(ytdl(url, { volume: 5 })));
+    message.channel.send(`Ща ебошит **${title}**`);
+  });
+
+  storage.connections.addConnection(message.guildId, subscription);
 
   if (process.env.DEBUG) {
     console.log('Added connection to storage');
-    connectionStorage.toString();
+    storage.connections.toString();
   }
 
   return subscription;

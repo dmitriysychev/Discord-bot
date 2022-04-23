@@ -1,6 +1,5 @@
 const log = require('../common/logger').child({ className: 'Storage' });
 
-
 const Redis = require('./clients/redis');
 
 const ConnectionsStorage = require('./connections_storage');
@@ -14,10 +13,9 @@ class Storage {
 
   async init() {
     log.info({ methodName: 'init' }, 'Initializing storages');
-    console.log(this._queueStorage);
     await Promise.all([
       this._connectionsStorage.init(),
-      this.__queueStorage.init(),
+      this._queueStorage.init(),
     ]);
   }
 

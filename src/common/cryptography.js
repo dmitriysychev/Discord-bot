@@ -12,6 +12,7 @@ const getRandomString = (length = 22) => {
   let cursor = 0;
   const charsLength = RANDOM_CHARS.length;
 
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < length; i++) {
     cursor += randomBytes[i];
     result[i] = RANDOM_CHARS[cursor % charsLength];

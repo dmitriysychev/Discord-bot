@@ -7,10 +7,10 @@ const log = require('./common/logger').child({ className: 'Bot' });
 
 class Bot {
   /**
-     *
-     * @param {String} token - secret token for your bot
-     * @param {String} prefix - prefix of bots commands
-     */
+   *
+   * @param {String} token - secret token for your bot
+   * @param {String} prefix - prefix of bots commands
+   */
   constructor(token, prefix, langPack) {
     this._token = token;
     this._prefix = prefix;
@@ -31,14 +31,16 @@ class Bot {
   }
 
   /**
-     * Login your bot in Discord. REQUIRED method!
-     */
+   * Login your bot in Discord. REQUIRED method!
+   */
   async launch() {
     try {
       await this._bot.login(this._token);
       this._authorize = true;
 
-      this._bot.on('ready', () => { this.onReadyListener(); });
+      this._bot.on('ready', () => {
+        this.onReadyListener();
+      });
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -46,20 +48,24 @@ class Bot {
   }
 
   /**
-     *
-     */
+   *
+   */
   async onReadyListener() {
     log.info({ methodName: 'onReadyListener' }, `Logged in as ${this._bot.user.tag}!`);
 
-    this._bot.on('messageCreate', (message) => { this.onMessageListener(message); });
-    this._bot.on('voiceStateUpdate', (olduser, newuser) => { this.onVoiceStateUpdate(olduser, newuser); });
+    this._bot.on('messageCreate', (message) => {
+      this.onMessageListener(message);
+    });
+    this._bot.on('voiceStateUpdate', (olduser, newuser) => {
+      this.onVoiceStateUpdate(olduser, newuser);
+    });
     this._bot.on('error', (err) => log.error({ methodName: 'botErrorCatcher', err }, 'BOT_UNCAUGHT_EXCEPTION'));
   }
 
   /**
-     *
-     * @param {*} message
-     */
+   *
+   * @param {*} message
+   */
   onMessageListener(message) {
     log.setScope();
     if (!message.content.startsWith(this._prefix) || message.author.bot) return;
@@ -87,10 +93,10 @@ class Bot {
   }
 
   /**
-     *
-     * @param {*} userLeft a user that left the voice channel
-     * @param {*} userJoine a user that joined the voice channel
-     */
+   *
+   * @param {*} userLeft a user that left the voice channel
+   * @param {*} userJoine a user that joined the voice channel
+   */
   onVoiceStateUpdate(userLeft, userJoined) {
     if (userJoined.id !== this._bot.user.id) {
       const actionType = this.getVoiceChannelUpdateType(userLeft, userJoined);
@@ -121,10 +127,10 @@ class Bot {
   }
 
   /**
-     *
-     * @param {*} user
-     * @param {*} file
-     */
+   *
+   * @param {*} user
+   * @param {*} file
+   */
   // eslint-disable-next-line class-methods-use-this
   async playFile(user, file) {
     try {
@@ -141,10 +147,10 @@ class Bot {
   }
 
   /**
-     *
-     * @param {*} userLeft
-     * @param {*} userJoined
-     */
+   *
+   * @param {*} userLeft
+   * @param {*} userJoined
+   */
   getVoiceChannelUpdateType(userLeft, userJoined) {
     if (userJoined.channel != null) {
       if (userJoined.selfMute) {
@@ -154,16 +160,17 @@ class Bot {
         return 'unmute';
       }
       return 'join';
-    } if (userLeft.channel != null) {
+    }
+    if (userLeft.channel != null) {
       return 'leave';
     }
     return 'otherState';
   }
 
   /**
-     *
-     * @param {Action} action
-     */
+   *
+   * @param {Action} action
+   */
   addActionHandler(action) {
     if (!(action instanceof Action)) {
       throw TypeError('argument should be instance of Action class');
@@ -177,18 +184,18 @@ class Bot {
   }
 
   /**
-     *
-     * @param {String} userID user id to attach the sound file to
-     * @param {*} soundFile a custom sound file that will be played when user joins voice channel
-     * @param {*} alias user alias that is attached to the sound file
-     */
+   *
+   * @param {String} userID user id to attach the sound file to
+   * @param {*} soundFile a custom sound file that will be played when user joins voice channel
+   * @param {*} alias user alias that is attached to the sound file
+   */
   setVipUser(userID, options) {
     this._VIPUsers.set(userID, options);
   }
 
   /**
-     * Method, that will be called, when bot application exits
-     */
+   * Method, that will be called, when bot application exits
+   */
   async stop() {
     try {
       if (this._authorize) {

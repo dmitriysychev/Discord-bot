@@ -1,6 +1,7 @@
 const winston = require('winston');
 const als = require('async-local-storage');
 const { format } = require('date-fns');
+const stringify = require('json-stringify-safe');
 
 const { getRandomString } = require('./cryptography');
 
@@ -48,7 +49,8 @@ const consoleView = printf((info) => {
     meta = { requestId: getRandomString(17) };
     als.set(ALS_KEY, meta, false);
   }
-  return `[\x1b[35m${format(new Date(), 'HH:mm:ss:SSS')}\x1b[0m][\x1b[93m${meta.requestId}\x1b[0m][${levelMap[info.level]}] \x1b[34m${info.message + extractErrors(info.data)} \x1b[90m/ ${JSON.stringify({
+
+  return `[\x1b[35m${format(new Date(), 'HH:mm:ss:SSS')}\x1b[0m][\x1b[93m${meta.requestId}\x1b[0m][${levelMap[info.level]}] \x1b[34m${info.message + extractErrors(info.data)} \x1b[90m/ ${stringify({
     ...info.data,
     ...info.meta,
     ...meta,

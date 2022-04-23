@@ -1,11 +1,13 @@
-module.exports = {
-  name: '.покажи',
-  execute(bot, msg) {
-    if (!bot._queuesOfChannelsMusic.isEmpty) {
-      // msg.channel.send('```'+ musicQueue.show() + '```');
-      msg.channel.send(`\`\`\` У вас в очереди ${bot._queuesOfChannelsMusic.length} песен \`\`\``);
-    } else {
-      msg.channel.send('У вас в очереди нету песен');
-    }
-  },
-};
+const BaseCommand = require('./base_command');
+
+class ShowQueue extends BaseCommand {
+  constructor() {
+    super();
+    this.description = 'ShowQueue';
+  }
+
+  async execute(message) {
+    message.channel.send('Чет там есть братанчик, я хз');
+  }
+}
+module.exports = new ShowQueue();

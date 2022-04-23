@@ -1,5 +1,5 @@
-const connectionStorage = require('../src/storage/connections_storage');
 const BaseCommand = require('./base_command');
+const storage = require('../src/storage');
 
 class LeaveCommand extends BaseCommand {
   constructor() {
@@ -7,10 +7,10 @@ class LeaveCommand extends BaseCommand {
     this.description = 'Command to leave the voice chat';
   }
 
-  async execute(bot, message) {
-    bot._queuesOfChannelsMusic.clear();
+  async execute(message) {
+    await storage.musicQueue.clear(message.guildId);
     if (message.member.voice.channel) {
-      const subscribtion = connectionStorage.getConnection(message.guildId);
+      const subscribtion = storage.connections.getConnection(message.guildId);
       if (subscribtion) {
         subscribtion.unsubscribe();
         subscribtion.connection.destroy();
